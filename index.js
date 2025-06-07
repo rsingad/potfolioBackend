@@ -22,7 +22,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 connectDB();
 app.use(cors({
-  origin: "http://localhost:5173",  // ✅ React frontend
+  origin: "https://main--rameshpotfoliyo.netlify.app",  // ✅ React frontend
   credentials: true                // ✅ allow session cookie to be sent
 }));
 app.use(cors());
@@ -34,5 +34,5 @@ app.use("/auth", require("./routes/auth"));
 
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT} || https://main--rameshpotfoliyo.netlify.app/`);
 });

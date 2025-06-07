@@ -13,15 +13,15 @@ router.get("/github/signup", passport.authenticate("github", { scope: ["user:ema
 // GitHub Callback
 router.get("/github/callback",
   passport.authenticate("github", {
-    successRedirect: "http://localhost:5173/dashboard", // redirect to React dashboard
-    failureRedirect: "http://localhost:5173/login",     // optional: login fail
+    successRedirect: "https://main--rameshpotfoliyo.netlify.app/dashboard", // redirect to React dashboard
+    failureRedirect: "https://main--rameshpotfoliyo.netlify.app/login",     // optional: login fail
   })
 );
 
 // Logout
 router.get("/logout", (req, res) => {
   req.logout(() => {
-    res.redirect("http://localhost:5173");
+    res.redirect("https://main--rameshpotfoliyo.netlify.app");
   });
 });
 
