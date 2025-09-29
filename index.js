@@ -19,9 +19,9 @@ const ONE_DAY = 1000 * 60 * 60 * 24;
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5000',
-  'https://main--rameshpotfoliyo.netlify.app',
-  "https://potfoliobackend-76c7.onrender.com",
-  "https://rameshsingad.com" // Final Production Domain
+  // 'https://main--rameshpotfoliyo.netlify.app',
+  // "https://potfoliobackend-76c7.onrender.com",
+  // "https://rameshsingad.com" 
 ];
 
 // CORS Configuration

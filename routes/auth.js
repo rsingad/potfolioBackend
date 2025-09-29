@@ -20,27 +20,31 @@ router.get("/github", passport.authenticate("github", { scope: ["user:email"] })
 router.get(
     "/github/callback",
     passport.authenticate("github", {
-        successRedirect: "https://rameshsingad.com/dashboard", 
-        failureRedirect: "https://rameshsingad.com/login",     
+        successRedirect: `${process.env.FRONTEND_URL}/dashboard`, 
+        failureRedirect: `${process.env.FRONTEND_URL}/login`,     
     })
 );
 
 // --- 2. USER SESSION ROUTES ---
 
 // Logout Route
+
 router.get("/logout", (req, res, next) => {
     req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
+        if (err) { return next(err); }
+        
         req.session.destroy((err) => {
-            if (err) {
-                return next(err);
-            }
-            res.redirect("https://rameshsingad.com/");
+            if (err) { return next(err); }
+            
+            // 🔥 CRITICAL FIX: Redirect के बजाय 200 OK और JSON भेजें।
+            res.status(200).json({ 
+                success: true, 
+                message: "Logged out successfully" 
+            });
         });
     });
 });
+
 
 // Get Current User (Used by Dashboard.jsx to check session status)
 router.get("/me", (req, res) => {
