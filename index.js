@@ -42,7 +42,16 @@ app.use(express.json());
 app.use(session({
   secret: "supersecret",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+       
+        secure: true, 
+       
+        sameSite: 'none', 
+       
+        // domain: 'rameshsingad.com' 
+        maxAge: 1000 * 60 * 60 * 24 
+    }
 }));
 
 // Apply CORS middleware (FIXED: Only one call)
