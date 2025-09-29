@@ -8,27 +8,28 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 require("./config/passport"); // Passport strategy
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Allowed Origins List
+// 🔥 FIX: Localhost origins added back for development compatibility
 const allowedOrigins = [
-  // 'http://localhost:5173', 
-  // 'http://localhost:5000',  
-  'https://main--rameshpotfoliyo.netlify.app', // Your deployed Netlify frontend
-  "https://rameshsingad.com"
+    'http://localhost:5173', 
+    'http://localhost:3000', 
+    'https://main--rameshpotfoliyo.netlify.app', // Netlify Preview/Deployment URL
+    "https://rameshsingad.com" // Final Production Domain
 ];
 
 // CORS Configuration
 const corsOptions = {
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps) OR if origin is in the allowed list
+        // Allow requests with no origin (e.g., Postman) OR if origin is in the allowed list
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
-            // IMPORTANT: Remove the Error, just block access quietly
-            callback(new Error('Not allowed by CORS'));
+            // Block requests from unapproved domains
+            callback(new Error(`CORS blocked request from origin: ${origin}`));
         }
     },
     credentials: true 
@@ -39,22 +40,22 @@ connectDB();
 
 // Middleware Setup
 app.use(express.json());
+
+// Session Middleware (CRUCIAL for HTTPS/Cross-Domain Login)
 app.use(session({
-  secret: "supersecret",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-       
+    secret: process.env.SESSION_SECRET || "supersecret", // Ensure SESSION_SECRET is in your Render vars
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        // MUST be true in production (HTTPS) to send cookies across domains (Render -> rameshsingad.com)
         secure: true, 
-       
+        // MUST be 'none' for cross-site communication (Render is different from rameshsingad.com)
         sameSite: 'none', 
-       
-        // domain: 'rameshsingad.com' 
-        maxAge: 1000 * 60 * 60 * 24 
+        maxAge: 1000 * 60 * 60 * 24 // 1 day
     }
 }));
 
-// Apply CORS middleware (FIXED: Only one call)
+// Apply CORS middleware
 app.use(cors(corsOptions));
 
 // Passport Setup
@@ -68,6 +69,6 @@ app.use("/auth", require("./routes/auth"));
 
 // Server Start
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`CORS configured for: ${allowedOrigins.join(' | ')}`);
+    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`CORS configured for: ${allowedOrigins.join(' | ')}`);
 });

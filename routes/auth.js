@@ -14,8 +14,8 @@ router.get(
     passport.authenticate("github", {
         // NOTE: These URLs should ideally be environment variables (process.env.FRONTEND_URL)
         // Ensure your React frontend is running on 5153
-        successRedirect: "https://rameshsingad.com/dashboard", // Redirect to React dashboard (Success)
-        failureRedirect: "https://rameshsingad.com/login",     // Redirect to React login/error page (Failure)
+        successRedirect: `https://rameshsingad.com/dashboard`, // Redirect to React dashboard (Success)
+        failureRedirect: `https://rameshsingad.com/login`,     // Redirect to React login/error page (Failure)
     })
 );
 
