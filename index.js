@@ -20,7 +20,7 @@ if (isProduction) {
 }
 // 🔥 FIX: Localhost origins added back for development compatibility
 const allowedOrigins = [
-  // 'http://localhost:5173',
+    'http://localhost:5173',
   // 'http://localhost:5000',
   "https://rameshsingad.com",
   "https://potfoliobackend-76c7.onrender.com",
