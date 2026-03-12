@@ -22,10 +22,11 @@ if (isProduction) {
 }
 // 🔥 FIX: Localhost origins added back for development compatibility
 const allowedOrigins = [
+  'https://www.rameshsingad.com',
   //'http://localhost:5173',
   //'http://localhost:5000',
   "https://rameshsingad.com",
-  "https://www.rameshsingad.com/",
+  
   "https://potfoliobackend-76c7.onrender.com",
   'https://main--rameshpotfoliyo.netlify.app'
 ];
